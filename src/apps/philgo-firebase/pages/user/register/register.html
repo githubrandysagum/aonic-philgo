@@ -1,0 +1,96 @@
+<app-header></app-header>
+<section class="center base-center col-sm-8 col-md-9 col-lg-6 col-xl-8">
+<form class="registerForm">
+    <table class="container-fluid" >
+            <tr  *ngIf=" ! login ">
+                <td><label for="inputID" >User ID</label></td>
+                <td >
+                    <input [(ngModel)]="form.id" class="form-control" name="id" type="text" id="inputID" placeholder="Input User ID" autocomplete="off"> 
+                </td>
+            </tr>
+
+            <tr  *ngIf=" ! login ">
+                <td><label for="inputPassword" >Password</label></td>
+                <td >
+                    <input [(ngModel)]="form.password" class="form-control" name="password" type="password" id="inputPassword" placeholder="Input Password" autocomplete="off"> 
+                </td>
+            </tr>
+
+            <tr>
+                <td><label for="inputName" >Name</label></td> 
+                <td >
+                    <input [(ngModel)]="form.name" class="form-control" name="name" type="text" id="inputName" placeholder="Input Name" autocomplete="off"> 
+                </td>
+            </tr>
+             <tr>
+                <td><label for="inputName" >Nickname</label></td> 
+                <td >
+                    <input [(ngModel)]="form.nickname" class="form-control" name="name" type="text" id="inputName" placeholder="Input Name" autocomplete="off"> 
+                </td>
+            </tr>
+
+            <tr >
+                <td><label for="inputEmail" >Email</label></td> 
+                <td >
+                <input [(ngModel)]="form.email" class="form-control" name="email" type="email" id="inputEmail" placeholder="Input Email" autocomplete="off"> 
+                </td>
+            </tr>
+
+            <tr>
+                <td><label for="inputMobile" >Mobile</label></td> 
+                <td >
+                    <input [(ngModel)]="form.mobile" class="form-control" name="mobile" type="number" id="inputMobile" placeholder="Input your phone number." autocomplete="off">
+                    <div class="text-muted">Input digits only</div>
+                </td>        
+            </tr>
+
+            <tr>
+                <td><label> Gender</label></td>     
+                <td >
+                    <label for="inputGenderM" class="form-check-inline">
+                        <input [(ngModel)]="form.gender" class="form-check-input" name="gender" type="radio" id="inputGenderM" value='M'>
+                        Male
+                    </label>   
+                    <label for="inputGenderF" class="form-check-inline">
+                        <input [(ngModel)]="form.gender" class="form-check-input" name="gender" type="radio" id="inputGenderF" value='F'>
+                        Female
+                    </label>
+                    
+                </td> 
+            </tr>
+            
+            <tr >
+                <td><label for="inputBirthday">Birth Day</label></td> 
+                <td >
+                    <input [(ngModel)]="form.birthday" class="form-control" name="birthday" type="date" id="inputBirthday"> 
+                </td>       
+            </tr>
+             <tr>   
+            <td></td>
+            <td>   
+                <button *ngIf=" ! login " (click)="onClickRegister()" type="submit" class="btn btn-primary">
+                <i class="fa fa-sign-in"></i> REGISTER
+                </button>
+                
+                <button *ngIf=" login " (click)="onClickUpdate()" type="submit" class="btn btn-primary">
+                <i class="fa fa-sign-in"></i>UPDATE
+                </button>
+
+
+                <button routerLink="/" type="button" class="btn btn-secondary">
+                <i class="fa fa-times"></i>Cancel
+                </button>
+                <div class="process">
+                <div *ngIf=" process.loader ">
+                    <i class="fa fa-spinner fa-spin"></i> Connecting to server ...
+                </div>
+                <div *ngIf=" process.error " class="alert alert-danger" role="alert">
+                    <strong>Error!</strong> {{ process.error }}
+                </div>
+                </div> 
+            </td>  
+            </tr>        
+    </table>  
+         
+</form>
+</section>

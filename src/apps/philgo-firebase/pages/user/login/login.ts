@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Member, MEMBER_LOGIN_DATA } from '../../../api/philgo-api/v2/member';
 import { formProcess } from '../../../etc/share';
-
+import { Router } from '@angular/router'
 
 @Component({
     selector: 'login-page',
@@ -19,7 +19,7 @@ export class LoginPage {
 
     constructor(
         private member: Member,
-
+        private router: Router
     ) {
     }
     onClickLogin() {
@@ -31,7 +31,8 @@ export class LoginPage {
         this.process.startLoader();
         this.member.login( this.form,
             login => {
-                console.log('philgo login success: ', login);        
+                console.log('philgo login success: ', login);  
+                this.router.navigate(['/']);      
             },
             er => {      
                 console.log("philgo member.login error: ", er );  
