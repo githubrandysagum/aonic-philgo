@@ -1,0 +1,55 @@
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+     
+      
+      <section class="center base-center col-sm-8 col-md-9 col-lg-6 col-xl-8">
+          <h1>{{ title }} ...</h1>
+          <div class="container-fluid">
+          <form>
+
+            <div class="row form-group">
+              <label for="inputID" class="col-md-2 col-form-label">User ID</label>
+              <div class="col-md-10 ">
+                <input [(ngModel)]="form.id"  name="id" type="text" class="form-control" id="inputID" placeholder="Input User ID">
+                <small class="form-text text-muted">Input your login user id.</small>
+              </div>
+            </div>
+
+
+            <div class="row form-group">
+              <label for="inputPassword" class="col-md-2 col-form-label">Password</label>
+              <div class="col-md-10 ">
+                <input [(ngModel)]="form.password" name="password" type="password" class="form-control" id="inputPassword" placeholder="Input Login Password">
+                <small class="form-text text-muted">Input login password.</small>
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-sm-12">
+                <button (click)="onClickLogin()" type="submit" class="btn btn-primary">
+                  <i class="fa fa-sign-in"></i> LOGIN</button>
+                <button routerLink="/" type="button" class="btn btn-secondary">
+                  <i class="fa fa-times"></i> Cancel
+                </button>
+
+               <div class="process">
+                  <div *ngIf=" process.loader ">
+                    <i class="fa fa-spinner fa-spin"></i> Connecting to server ...
+                  </div>
+                  <div *ngIf=" process.error " class="alert alert-danger" role="alert">
+                    <strong>Error !</strong> {{ process.error }}
+                  </div>
+                </div>
+             </div>
+            </div>
+
+          
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>
+
