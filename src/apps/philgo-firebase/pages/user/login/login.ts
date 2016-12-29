@@ -32,7 +32,8 @@ export class LoginPage {
         this.member.login( this.form,
             login => {
                 console.log('philgo login success: ', login);  
-                this.router.navigate(['/']);      
+                this.process.setSuccess("Your were successfully login !: Wait for 3 seconds..."); 
+                setTimeout(()=> this.router.navigate(['/']), 2000);          
             },
             er => {      
                 console.log("philgo member.login error: ", er );  

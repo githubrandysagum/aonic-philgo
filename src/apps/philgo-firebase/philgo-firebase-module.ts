@@ -7,6 +7,9 @@ import { FormsModule } from '@angular/forms';
 import { LoginPage } from './pages/user/login/login';
 import { RegisterPage } from './pages/user/register/register';
 import { HomePage } from './pages/home/home';
+import { MessagePage } from './pages/message/message';
+import { ForumIndexPage } from './pages/forum/forum-index/forum-index';
+
 
 import { HeaderComponent} from './component/header/header';
 
@@ -14,7 +17,9 @@ import { HeaderComponent} from './component/header/header';
 const appRoutes: Routes = [
   { path: '', component: HomePage },
   { path: 'user/login', component: LoginPage },
-  { path: 'user/register', component: RegisterPage }
+  { path: 'user/register', component: RegisterPage },
+  { path: 'message', component: MessagePage },
+  { path: 'forum', component: ForumIndexPage }
   
   
 ];
@@ -32,6 +37,8 @@ const appRoutes: Routes = [
         LoginPage,
         RegisterPage,
         HomePage,
+        MessagePage,
+        ForumIndexPage,
         HeaderComponent
         ],
     providers: [
