@@ -1,21 +1,33 @@
 <app-header></app-header>
 <section class="content container-fluid">
   <div class="row">
-   
+   <div class="top-menu">
+      
+        <button class="btn btn-primary" (click)=" showCreateForm = true ">Create new</button>
+        <button class="btn btn-primary" (click)=" onClickMakeAllRead() ">Make all read</button>
+        <input *ngIf=" showSearchForm " name="key" [(ngModel)]="key" >
+        <button class="btn btn-primary" (click)=" onClickSearchFormSubmit() ">Search</button> 
+   </div>
     <section class="center col-sm-12 ">
       <div class="messages">
-        <button *ngIf="showCreateForm" (click)=" showCreateForm = false ">x</button>
-        <button (click)=" showCreateForm = true ">Send a Message</button>
-        <button (click)=" onClickMakeAllRead() ">Make all read</button>
-        <input *ngIf=" showSearchForm " name="key" [(ngModel)]="key">
-         
-        <button (click)=" onClickSearchFormSubmit() ">Search</button>
-
-        <div *ngIf="showCreateForm" class="create-form">
-          <input name="id_recv" [(ngModel)]="form.id_recv" placeholder="User ID">
-          <textarea name="content" [(ngModel)]="form.content" placeholder="Content"></textarea>
-          <button (click)="onClickCreateFormSubmit()">SUBMIT</button>
-          
+         <div *ngIf="showCreateForm" class="create-form">
+            
+            <div class="process">
+                <div *ngIf=" process.loader ">
+                <i class="fa fa-spinner fa-spin"></i> Connecting to server ...
+                </div>
+                <div *ngIf=" process.error " class="alert alert-danger" role="alert">
+                <strong>Error !</strong> {{ process.error }}
+                </div>
+                <div *ngIf=" process.success " class="alert alert-success" role="alert">
+                <strong>Success!</strong> {{ process.success }}
+                </div>
+          </div>
+        
+          <input name="id_recv" [(ngModel)]="form.id_recv" placeholder="User ID"  class="form-control" >
+          <textarea name="content" [(ngModel)]="form.content" class="form-control" placeholder="Content"></textarea>
+          <button  class="btn btn-success" (click)="onClickCreateFormSubmit()">SUBMIT</button> 
+          <button  class="btn btn-default" *ngIf="showCreateForm" (click)=" showCreateForm = false ">Close</button>    
         </div>
 
         <div class="pages">
@@ -38,8 +50,7 @@
 
                 <div *ngIf=" message.showReplyForm " class="create-form">
                   <textarea name="content" [(ngModel)]="form.content" placeholder="Content"></textarea>
-                  <button (click)="onClickReplyFormSubmit(message)">SUBMIT</button>
-                 
+                  <button (click)="onClickReplyFormSubmit(message)">SUBMIT</button>       
                 </div>
 
 

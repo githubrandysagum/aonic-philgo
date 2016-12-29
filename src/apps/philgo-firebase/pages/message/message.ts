@@ -1,6 +1,6 @@
 import { Component, OnInit, Renderer } from '@angular/core';
 import { Message, MESSAGE, MESSAGES, MESSAGE_LIST, MESSAGE_FORM } from '../../api/philgo-api/v2/message';
-import { formProcess } from '../../../etc/share';
+import { formProcess } from '../../etc/share';
 import * as _ from 'lodash';
 
 @Component({
@@ -11,12 +11,16 @@ export class MessagePage implements OnInit {
      messages: MESSAGES = [];
      form: MESSAGE_FORM = <MESSAGE_FORM> {};
      showSearchForm: boolean = false;
+     showCreateForm: boolean = false;
      key: string = null;
      page_no : number = 0;
      scrollListener = null;
      scrollCount = 0;
      inPageLoading: boolean = false; // true while loading a page of posts.
      noMorePosts: boolean = false; // true when there are no more posts of a page.
+
+     process = formProcess.reset();
+
     constructor(
         private message : Message,
         private renderer: Renderer,
@@ -30,7 +34,7 @@ export class MessagePage implements OnInit {
 
      onClickShowContent(message : MESSAGE){
         message['show_content'] = true;
-
+        
         if ( message.stamp_open != "0" ) return;
 
         this.message.opened( message.idx, data => {
@@ -47,16 +51,18 @@ export class MessagePage implements OnInit {
     }
 
     onClickCreateFormSubmit() {
-
+        this.process.begin()
         this.message.send( this.form, re => {
             console.log("message send success: ", re);
+            this.process.setSuccess("message send success: ");
+           setTimeout(()=> this.showCreateForm = false, 2000);
             if( re.code == 0 ) {
               //alert("Message successfully sent to " + this.form.id_recv);
               this.form.id_recv = '';
               this.form.content = '';
             }
         },
-        error => alert("message sending error: " + error ),
+        error => this.process.setError("message sending error: " + error ),
         () => { }
         );
     }
