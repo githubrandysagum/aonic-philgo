@@ -29,6 +29,7 @@
                 <td >
                     <input *ngIf=" ! login " [(ngModel)]="form.nickname" class="form-control" name="name" type="text" id="inputNickname" placeholder="Input Nickname" autocomplete="off"> 
                     <span  class="form-control" *ngIf=" login&&nickname ">{{ nickname }}</span>
+                    <small class="form-text text-muted" *ngIf=" login&&nickname ">Nickname is not editable</small>
                 </td>
             </tr>
             <tr >
@@ -42,6 +43,7 @@
                 <td><label for="inputMobile" >Mobile</label></td> 
                 <td >
                     <input [(ngModel)]="form.mobile" class="form-control" name="mobile" type="number" id="inputMobile" placeholder="Input your phone number." autocomplete="off">
+                   
                     <div class="text-muted">Input digits only</div>
                 </td>        
             </tr>

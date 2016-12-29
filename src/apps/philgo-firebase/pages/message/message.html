@@ -1,6 +1,62 @@
 <app-header></app-header>
-<section>
+<section class="content container-fluid">
+  <div class="row">
+   
+    <section class="center col-sm-12 ">
+      <div class="messages">
+        <button *ngIf="showCreateForm" (click)=" showCreateForm = false ">x</button>
+        <button (click)=" showCreateForm = true ">Send a Message</button>
+        <button (click)=" onClickMakeAllRead() ">Make all read</button>
+        <input *ngIf=" showSearchForm " name="key" [(ngModel)]="key">
+         
+        <button (click)=" onClickSearchFormSubmit() ">Search</button>
 
-    <h1>Message</h1>
+        <div *ngIf="showCreateForm" class="create-form">
+          <input name="id_recv" [(ngModel)]="form.id_recv" placeholder="User ID">
+          <textarea name="content" [(ngModel)]="form.content" placeholder="Content"></textarea>
+          <button (click)="onClickCreateFormSubmit()">SUBMIT</button>
+          
+        </div>
 
-</section>
+        <div class="pages">
+          <ng-container *ngFor = "let message of messages">
+            <div class="message" *ngIf = " message.idx ">
+
+              <div class="title" (click)="onClickShowContent(message)">
+                <div class="from">{{ message.from.nickname }}</div>
+                <div class="subject" [attr.open]=" message.stamp_open ">
+                    <span *ngIf="message.subject != 'undefined'" >{{ message.subject }}</span>
+                </div>
+                <div class="date">{{ message['date_created'] }}</div>
+                <div  style="clear:right;"></div>
+              </div>
+
+              <div class="content" *ngIf="message['show_content']">
+                <div *ngIf="message.content != 'undefined'"  class="message_content" [innerHTML]="message.content"></div>
+                <div *ngIf="message.content == 'undefined'" class="message_content"></div>
+
+
+                <div *ngIf=" message.showReplyForm " class="create-form">
+                  <textarea name="content" [(ngModel)]="form.content" placeholder="Content"></textarea>
+                  <button (click)="onClickReplyFormSubmit(message)">SUBMIT</button>
+                 
+                </div>
+
+
+                <div class="menu" >
+                  <button class="hide menu-item" (click)="onClickHideContent(message)" >HIDE</button>
+                  <button class="reply menu-item" (click)=" message.showReplyForm = true ">REPLY</button>
+                  <button class="delete menu-item"  (click)="onClickDelete( message )">DELETE</button>
+                </div>
+              </div>
+
+            </div>
+          </ng-container>
+        </div>
+
+        <div *ngIf=" inPageLoading " class="in-page-loading"><i class="fa fa-spinner fa-spin"></i> Loading ...</div>
+        <div *ngIf=" noMorePosts " class="no-more-posts">No more message</div>
+      </div>
+    </section><!--/section.center-->
+    </div><!--/.row-->
+</section><!--/section.content-->
