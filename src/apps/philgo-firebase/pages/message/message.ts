@@ -33,10 +33,9 @@ export class MessagePage implements OnInit {
     ngOnInit() { }
 
      onClickShowContent(message : MESSAGE){
-        message['show_content'] = true;
+        message['show_content'] = true;  
         
         if ( message.stamp_open != "0" ) return;
-
         this.message.opened( message.idx, data => {
             console.log("onClickShowContent() : data: ", data);
             message.stamp_open = "1";
@@ -48,6 +47,11 @@ export class MessagePage implements OnInit {
 
     onClickHideContent(message : MESSAGE){
         message['show_content'] = false;
+    }
+    
+    onClickReply(message : MESSAGE){
+         message['showReplyForm'] = true;
+         this.showCreateForm = false;
     }
 
     onClickCreateFormSubmit() {

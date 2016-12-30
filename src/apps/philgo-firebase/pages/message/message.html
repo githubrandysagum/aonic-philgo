@@ -1,16 +1,17 @@
 <app-header></app-header>
 <section class="content container-fluid">
   <div class="row">
-   <div class="top-menu">
+   
+    <section class="center">
+      <div class="top-menu">
       
-        <button class="btn btn-primary" (click)=" showCreateForm = true ">Create new</button>
-        <button class="btn btn-primary" (click)=" onClickMakeAllRead() ">Make all read</button>
+        <button class="btn btn-info btn-sm" [class.btn-info]="!showCreateForm" [class.btn-primary]="showCreateForm" (click)=" showCreateForm = true "><i class="fa fa-pencil fa-xs" aria-hidden="true"></i> Create new</button>
+        <button class="btn btn-info btn-sm" (click)=" onClickMakeAllRead() "><i class="fa fa-envelope-open" aria-hidden="true"></i> Make all read</button>
         <input *ngIf=" showSearchForm " name="key" [(ngModel)]="key" >
-        <button class="btn btn-primary" (click)=" onClickSearchFormSubmit() ">Search</button> 
+        <button class="btn btn-info btn-sm" (click)=" onClickSearchFormSubmit() ">Search</button> 
    </div>
-    <section class="center col-sm-12 ">
       <div class="messages">
-         <div *ngIf="showCreateForm" class="create-form">
+         <div *ngIf="showCreateForm"  class="create-form">
             
             <div class="process">
                 <div *ngIf=" process.loader ">
@@ -23,19 +24,25 @@
                 <strong>Success!</strong> {{ process.success }}
                 </div>
           </div>
-        
-          <input name="id_recv" [(ngModel)]="form.id_recv" placeholder="User ID"  class="form-control" >
-          <textarea name="content" [(ngModel)]="form.content" class="form-control" placeholder="Content"></textarea>
-          <button  class="btn btn-success" (click)="onClickCreateFormSubmit()">SUBMIT</button> 
-          <button  class="btn btn-default" *ngIf="showCreateForm" (click)=" showCreateForm = false ">Close</button>    
+         
+            <input name="id_recv" [(ngModel)]="form.id_recv" placeholder="User ID"  >
+            <textarea name="content" [(ngModel)]="form.content"  placeholder="Content"></textarea>
+         
+            <button  class="btn btn-primary btn-sm" (click)="onClickCreateFormSubmit()">Submit</button> 
+            <button  class="btn btn-default btn-sm" *ngIf="showCreateForm" (click)=" showCreateForm = false ">Close</button>    
         </div>
 
         <div class="pages">
           <ng-container *ngFor = "let message of messages">
             <div class="message" *ngIf = " message.idx ">
-
+              
               <div class="title" (click)="onClickShowContent(message)">
-                <div class="from">{{ message.from.nickname }}</div>
+               
+                <div class="from">
+                   <i *ngIf="message.stamp_open != '0'" class="fa fa-envelope-open-o" aria-hidden="true"></i> 
+                   <i *ngIf="message.stamp_open == '0' " class="fa fa-envelope" aria-hidden="true"></i> 
+                    {{ message.from.nickname }}
+                </div>
                 <div class="subject" [attr.open]=" message.stamp_open ">
                     <span *ngIf="message.subject != 'undefined'" >{{ message.subject }}</span>
                 </div>
@@ -46,27 +53,32 @@
               <div class="content" *ngIf="message['show_content']">
                 <div *ngIf="message.content != 'undefined'"  class="message_content" [innerHTML]="message.content"></div>
                 <div *ngIf="message.content == 'undefined'" class="message_content"></div>
-
-
-                <div *ngIf=" message.showReplyForm " class="create-form">
-                  <textarea name="content" [(ngModel)]="form.content" placeholder="Content"></textarea>
-                  <button (click)="onClickReplyFormSubmit(message)">SUBMIT</button>       
-                </div>
-
+                
+                
 
                 <div class="menu" >
                   <button class="hide menu-item" (click)="onClickHideContent(message)" >HIDE</button>
-                  <button class="reply menu-item" (click)=" message.showReplyForm = true ">REPLY</button>
+                  <button class="reply menu-item" (click)="onClickReply(message)">REPLY</button>
                   <button class="delete menu-item"  (click)="onClickDelete( message )">DELETE</button>
                 </div>
+                
+              
               </div>
+              <div *ngIf=" message['show_content'] && message.showReplyForm && !showCreateForm" class="create-form">
+                  <label>Reply</label>
+                  <textarea name="content" [(ngModel)]="form.content" placeholder="Content"></textarea>
+                  <button class="btn btn-success btn-sm" (click)="onClickReplyFormSubmit(message)">Submit</button> 
+                  <button class="btn btn-primary btn-sm" (click)="message.showReplyForm = false">Close</button>      
+               </div>
+            
+
 
             </div>
           </ng-container>
         </div>
 
         <div *ngIf=" inPageLoading " class="in-page-loading"><i class="fa fa-spinner fa-spin"></i> Loading ...</div>
-        <div *ngIf=" noMorePosts " class="no-more-posts">No more message</div>
+        <small *ngIf=" noMorePosts " class="no-more-posts">No more message</small>
       </div>
     </section><!--/section.center-->
     </div><!--/.row-->

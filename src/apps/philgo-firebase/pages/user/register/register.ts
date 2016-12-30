@@ -17,7 +17,7 @@ export class RegisterPage implements OnInit {
     form = < MEMBER_REGISTER_DATA > {};
     process = formProcess.reset();
 
-
+    validEmail = true;
     constructor(
         private member : Member,
         private router : Router
@@ -91,7 +91,15 @@ export class RegisterPage implements OnInit {
     }
     
 
-
+    onkeyupEmail(){
+       
+        
+        if(!this.validateEmail(this.form.email)){
+            setTimeout(()=> this.validEmail = false, 345);
+            return;
+        }
+         setTimeout(()=> this.validEmail = true, 345);   
+    }
     
 
     validate() : boolean{

@@ -9,9 +9,11 @@ import { RegisterPage } from './pages/user/register/register';
 import { HomePage } from './pages/home/home';
 import { MessagePage } from './pages/message/message';
 import { ForumIndexPage } from './pages/forum/forum-index/forum-index';
+import { ForumListPage } from './pages/forum/forum-list/forum-list';
 
 
 import { HeaderComponent} from './component/header/header';
+import { PostViewComponent} from './pages/forum/component/post-view-component/post-view-component';
 
 
 const appRoutes: Routes = [
@@ -19,7 +21,8 @@ const appRoutes: Routes = [
   { path: 'user/login', component: LoginPage },
   { path: 'user/register', component: RegisterPage },
   { path: 'message', component: MessagePage },
-  { path: 'forum', component: ForumIndexPage }
+  { path: 'forum', component: ForumIndexPage },
+  { path: 'forum/:post_id', component: ForumListPage }
   
   
 ];
@@ -39,7 +42,9 @@ const appRoutes: Routes = [
         HomePage,
         MessagePage,
         ForumIndexPage,
-        HeaderComponent
+        ForumListPage,
+        HeaderComponent,
+        PostViewComponent
         ],
     providers: [
         

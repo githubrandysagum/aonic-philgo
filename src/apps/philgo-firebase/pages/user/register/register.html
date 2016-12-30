@@ -1,7 +1,9 @@
 <app-header></app-header>
 <section class="center base-center col-sm-8 col-md-9 col-lg-6 col-xl-8">
 
- <h1>Register...</h1>
+ <h1 *ngIf="!login">Register...</h1>
+ <h1 *ngIf="login">Profile</h1>
+ 
 <form class="registerForm">
     <table class="container-fluid" cellspacing="0">
             <tr  *ngIf=" ! login ">
@@ -29,13 +31,14 @@
                 <td >
                     <input *ngIf=" ! login " [(ngModel)]="form.nickname" class="form-control" name="name" type="text" id="inputNickname" placeholder="Input Nickname" autocomplete="off"> 
                     <span  class="form-control" *ngIf=" login&&nickname ">{{ nickname }}</span>
-                    <small class="form-text text-muted" *ngIf=" login&&nickname ">Nickname is not editable</small>
+                    <small class="form-text text-muted text-info" *ngIf=" login&&nickname ">#Nickname is not editable</small>
                 </td>
             </tr>
             <tr >
                 <td><label for="inputEmail" >Email</label></td> 
                 <td >
-                <input [(ngModel)]="form.email" class="form-control" name="email" type="email" id="inputEmail" placeholder="Input Email" autocomplete="off"> 
+                <input [(ngModel)]="form.email" (keyup)="onkeyupEmail()" class="form-control" name="email" type="email" id="inputEmail" placeholder="Input Email" autocomplete="off"> 
+                <small class="form-text text-muted text-danger" *ngIf="!validEmail ">*Email format not valid!</small>
                 </td>
             </tr>
 
@@ -43,8 +46,7 @@
                 <td><label for="inputMobile" >Mobile</label></td> 
                 <td >
                     <input [(ngModel)]="form.mobile" class="form-control" name="mobile" type="number" id="inputMobile" placeholder="Input your phone number." autocomplete="off">
-                   
-                    <div class="text-muted">Input digits only</div>
+                     <small class="form-text text-muted" >Input digits only</small>
                 </td>        
             </tr>
 
