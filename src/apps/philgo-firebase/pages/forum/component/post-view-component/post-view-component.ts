@@ -1,22 +1,39 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { POST } from '../../../../api/philgo-api/v2/philgo-api-interface';
 import { Post } from '../../../../api/philgo-api/v2/post';
+import { EditPostComponent } from '../edit-post-component/edit-post-component';
+
 
 @Component({
     selector: 'post-view-component',
     templateUrl: 'post-view-component.html'
 })
 export class PostViewComponent implements OnInit {
+   
+   
     isPost: boolean = false;
     isComment: boolean = false;
-    
-    @Input() post : POST = null;
+   
+    hideContent: boolean = false;
+    active: boolean = false; // "active==true" means, the use is in editing.
+   
 
 
+    @ViewChild('editComponent') editComponent: EditPostComponent;
 
+
+    @Input() show: boolean = false; // if set true, the create/edit form box shows.
+    @Input() mode: string = null;
+    @Input() post: POST = null; // it is comment or post.
+    @Input() root: POST = null;
+
+
+  
     constructor(
         private postService : Post
     ) { }
+
+
 
     ngOnInit() { 
         try {
@@ -38,20 +55,20 @@ export class PostViewComponent implements OnInit {
 
 
 
-    // onClickReply() {
-    //     this.active = true;
-    //     this.mode = 'create-comment';
-    //     this.editComponent.initForm( this.mode );
-    // }
+    onClickReply() {
+        this.active = true;
+        this.mode = 'create-comment';
+        this.editComponent.initForm( this.mode );
+    }
 
-    // onClickEdit() {
-    //     console.log("ViewComponent::onClickEdit()", this.editComponent );
-    //     this.active = true;
-    //     this.hideContent = true;
-    //     if ( this.post.idx == '0' ) this.mode = 'post-edit';
-    //     else this.mode = 'edit-comment';
-    //     this.editComponent.initForm( this.mode );
-    // }
+    onClickEdit() {
+        console.log("ViewComponent::onClickEdit()", this.editComponent );
+        this.active = true;
+        this.hideContent = true;
+        if ( this.post.idx == '0' ) this.mode = 'post-edit';
+        else this.mode = 'edit-comment';
+        this.editComponent.initForm( this.mode );
+    }
 
     onClickDelete() {
         this.post['inDeleting'] = true;
@@ -99,5 +116,15 @@ export class PostViewComponent implements OnInit {
         () => {
             this.post['inLike'] = false;
         });
+    }
+
+
+     editComponentOnSuccess() {
+        this.active = false;
+        this.hideContent = false;
+    }
+    editComponentOnCancel() {
+        this.active = false;
+        this.hideContent = false;
     }
 }

@@ -28,6 +28,7 @@ export class ForumListPage implements OnInit {
                 this.posts = <POSTS> [];
                 this.post_id =  param['post_id']
                 this.loadPage();
+                this.beginScroll();
           } );
      }
 
@@ -52,8 +53,10 @@ export class ForumListPage implements OnInit {
             this.inPageLoading = false;
             if ( page.posts.length == 0 ) {
 
-                alert('nomorepost')
-              this.noMorePosts = true; }
+              
+              this.noMorePosts = true; 
+              this.endScroll();
+        }
             else {
                 this.delayPush( page );
             }
@@ -87,6 +90,7 @@ export class ForumListPage implements OnInit {
       let pagesHeight = pages['offsetTop'] + pages['clientHeight'];
       let pageOffset = window.pageYOffset + window.innerHeight;
       if( pageOffset > pagesHeight - 200) { // page scrolled. the distance to the bottom is within 200 px from
+      
         console.log("page scroll reaches at bottom: pageOffset=" + pageOffset + ", pagesHeight=" + pagesHeight);
         this.loadPage();
       }

@@ -13,6 +13,7 @@ import { ForumListPage } from './pages/forum/forum-list/forum-list';
 
 import { HeaderComponent} from './component/header/header';
 import { PostViewComponent} from './pages/forum/component/post-view-component/post-view-component';
+import { EditPostComponent} from './pages/forum/component/edit-post-component/edit-post-component';
 
 //File uploading
 import { AngularFireModule } from 'angularfire2';
@@ -53,7 +54,8 @@ let config = {
         ForumIndexPage,
         ForumListPage,
         HeaderComponent,
-        PostViewComponent
+        PostViewComponent,
+        EditPostComponent
         ],
     providers: [
         Data

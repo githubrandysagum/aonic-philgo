@@ -1,16 +1,24 @@
  <app-header></app-header>
  <section class="content container-fluid">
   <div class="row">
-    <div *ngIf=" posts " class="pages posts">
-        <div *ngFor=" let post of posts;  trackBy: post?.idx ">
-             <post-view-component [post]="post" ></post-view-component>
-            <div  *ngFor=" let comment of post.comments;  trackBy: comment?.idx ">
-                 <post-view-component [post]="comment"></post-view-component>
+      <div class="col-md-12">
+            <div *ngIf=" posts " class="pages posts">
+                <div *ngFor=" let post of posts;  trackBy: post?.idx ">
+                    <post-view-component 
+                    [post]="post"
+                    [mode] = "'create-post'"
+                    ></post-view-component>
+                    <div  *ngFor=" let comment of post.comments;  trackBy: comment?.idx ">
+                        <post-view-component 
+                            [post]="comment"
+                            [mode] = "'create-comment'"
+                        ></post-view-component>
+                    </div>
+                </div>
+                
             </div>
-        </div>
-        
+            <div *ngIf=" inPageLoading " class="in-page-loading"><i class="fa fa-spinner fa-spin"></i> Loading ...</div>
+            <div *ngIf=" noMorePosts " class="no-more-posts">No more posts</div>
     </div>
-    <div *ngIf=" inPageLoading " class="in-page-loading"><i class="fa fa-spinner fa-spin"></i> Loading ...</div>
-    <div *ngIf=" noMorePosts " class="no-more-posts">No more posts</div>
  </div>
 </section>

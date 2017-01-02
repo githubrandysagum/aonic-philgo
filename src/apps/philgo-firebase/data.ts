@@ -44,10 +44,10 @@ export class Data {
     })
     .catch( e => failureCallback( e.message ) );
 
-    task.on( firebase.storage.TaskEvent.STATE_CHANGED, snapshot => {
-      let percent = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-      progressCallback( percent );
-    });
+    // task.on( firebase.storage.TaskEvent.STATE_CHANGED, snapshot => {
+    //   let percent = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+    //   progressCallback( percent );
+    // });
   }
 
   delete( ref: string, successCallback: () => void, failureCallback: (error:string) => void ) {
