@@ -2,6 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
 import { formProcess } from '../../../etc/share';
 import { Member, MEMBER_DATA, MEMBER_REGISTER_DATA, MEMBER_LOGIN } from '../../../api/philgo-api/v2/member';
+import { Data } from '../../../data';
+
+
+export let picturedescriptionData = {
+    photoURL: '',
+    description: '',
+    photoREF: ''
+}
 
 @Component({
     selector: 'register-page',
@@ -9,6 +17,7 @@ import { Member, MEMBER_DATA, MEMBER_REGISTER_DATA, MEMBER_LOGIN } from '../../.
 })
 export class RegisterPage implements OnInit {
     title: string = "Register";
+
 
     login: MEMBER_LOGIN = null;
     nickname : string = "...";
@@ -18,9 +27,15 @@ export class RegisterPage implements OnInit {
     process = formProcess.reset();
 
     validEmail = true;
+
+    position = 0;
+    file_progress = null;
+    urlPhoto;
+    photo = picturedescriptionData; 
     constructor(
         private member : Member,
-        private router : Router
+        private router : Router,
+        private file : Data
     ) {
 
         this.login = member.getLoginData();
@@ -101,6 +116,35 @@ export class RegisterPage implements OnInit {
          setTimeout(()=> this.validEmail = true, 345);   
     }
     
+
+    onChange($event){
+        let file = $event.target.files[0];
+
+        if( file == void 0) return;
+
+        this.file_progress = true;
+        let ref = 'photo/' + Date.now() + '/' + file.name;
+
+       
+        this.file.upload( { file: file, ref: ref }, uploaded=>{
+            this.onFileUploaded( uploaded.url, uploaded.ref );   
+        }, error=>{
+
+        },
+        percent=>{
+            this.position = percent;
+        } );
+
+
+    }
+
+    onFileUploaded( url, ref){
+
+        this.file_progress = false;
+        this.urlPhoto = url;
+        this.photo.photoURL = url;
+        this.photo.photoREF = ref;
+    }
 
     validate() : boolean{
         if(this.isNull(this.form.id) && !this.login){

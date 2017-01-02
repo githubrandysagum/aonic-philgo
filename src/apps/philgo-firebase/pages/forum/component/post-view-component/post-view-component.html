@@ -1,1 +1,27 @@
-<div *ngIf="post" [innerHTML] = "post.content"><div>
+<article [class.post]=" isPost "
+         [class.comment]=" isComment "   
+         [attr.depth]=" post.depth "  
+>
+
+
+<h2 *ngIf=" isPost "  >{{post.subject}}</h2>
+<div *ngIf="post" [innerHTML] = "post.content"></div>
+
+ <!--list images -->
+    <div *ngIf=" post.photos.length " class="uploaded-files" [attr.no-files]=" post.photos.length " [hidden]="hideContent">
+        <img *ngFor=" let photo of post.photos " [src]=" photo.url_thumbnail ">
+    </div>
+    
+<!--like edit etc. buttons-->
+    <span class="buttons" [hidden]="hideContent">
+        <span *ngIf=" isComment " (click)="onClickReply()">Reply</span>
+        <span (click)="onClickEdit()">Edit</span>
+        <span *ngIf=" ! post.inDeleting " (click)="onClickDelete()">Delete</span>
+        <i *ngIf=" post.inDeleting " class="fa fa-spinner fa-spin"></i>
+        <span  (click)="onClickLike()">Like <span *ngIf=" !post.inLike ">({{ post.good }})</span></span>
+        <i *ngIf=" post.inLike " class="fa fa-spinner fa-spin"></i>
+        <span *ngIf=" !post.inReport " (click)="onClickReport()">Report</span>
+        <i *ngIf=" post.inReport " class="fa fa-spinner fa-spin"></i>
+    </span>
+
+</article>

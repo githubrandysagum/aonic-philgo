@@ -11,10 +11,12 @@ import { MessagePage } from './pages/message/message';
 import { ForumIndexPage } from './pages/forum/forum-index/forum-index';
 import { ForumListPage } from './pages/forum/forum-list/forum-list';
 
-
 import { HeaderComponent} from './component/header/header';
 import { PostViewComponent} from './pages/forum/component/post-view-component/post-view-component';
 
+//File uploading
+import { AngularFireModule } from 'angularfire2';
+import { Data } from './data';
 
 const appRoutes: Routes = [
   { path: '', component: HomePage },
@@ -26,14 +28,21 @@ const appRoutes: Routes = [
   
   
 ];
-
+let config = {
+    apiKey: "AIzaSyBnRU17u3RLZoFDkmvHL_gxNmvQxO9z5bA",
+    authDomain: "philgofirebase.firebaseapp.com",
+    databaseURL: "https://philgofirebase.firebaseio.com",
+    storageBucket: "philgofirebase.appspot.com",
+    messagingSenderId: "17096589698"
+  };
 
 @NgModule({
     imports: [
         FormsModule,
         BrowserModule,
         PhilgoApiModule,
-        RouterModule.forRoot( appRoutes )
+        RouterModule.forRoot( appRoutes ),
+        AngularFireModule.initializeApp(config) 
     ],
     exports: [],
     declarations: [
@@ -47,7 +56,7 @@ const appRoutes: Routes = [
         PostViewComponent
         ],
     providers: [
-        
+        Data
 
     ],
 })

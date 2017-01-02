@@ -6,6 +6,12 @@
  
 <form class="registerForm">
     <table class="container-fluid" cellspacing="0">
+            <tr>
+                <td><label for="inputFile" >Photo</label></td>
+                <td >
+                    <input  class="form-control" name="id" type="file" id="inputID" placeholder="File" (change)="onChange($event)"> 
+                </td>
+            </tr>
             <tr  *ngIf=" ! login ">
                 <td><label for="inputID" >User ID</label></td>
                 <td >
@@ -73,7 +79,18 @@
             </tr>
              <tr>   
            
-            <td colspan="2">   
+            <td colspan="2"> 
+                <div class="process">
+                    <div *ngIf=" process.loader ">
+                        <i class="fa fa-spinner fa-spin"></i> Connecting to server ...
+                    </div>
+                    <div *ngIf=" process.error " class="alert alert-danger" role="alert">
+                        <strong>Error!</strong> {{ process.error }}
+                    </div>
+                    <div *ngIf=" process.success " class="alert alert-success" role="alert">
+                        <strong>Success!</strong> {{ process.success }}
+                    </div>
+                </div>   
                 <button *ngIf=" ! login " (click)="onClickRegister()" type="submit" class="btn btn-primary">
                 <i class="fa fa-sign-in"></i> REGISTER
                 </button>
@@ -86,17 +103,7 @@
                 <button routerLink="/" type="button" class="btn btn-secondary">
                 <i class="fa fa-times"></i>Cancel
                 </button>
-                <div class="process">
-                <div *ngIf=" process.loader ">
-                    <i class="fa fa-spinner fa-spin"></i> Connecting to server ...
-                </div>
-                <div *ngIf=" process.error " class="alert alert-danger" role="alert">
-                    <strong>Error!</strong> {{ process.error }}
-                </div>
-                <div *ngIf=" process.success " class="alert alert-success" role="alert">
-                    <strong>Success!</strong> {{ process.success }}
-                </div>
-                </div> 
+                
             </td>  
             </tr>        
     </table>  
