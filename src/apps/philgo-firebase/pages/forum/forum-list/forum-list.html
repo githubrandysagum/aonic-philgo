@@ -1,8 +1,8 @@
  <app-header></app-header>
  <section class="content container-fluid">
   <div class="row">
-      <div class="col-md-12">
-            <div *ngIf=" posts " class="pages posts">
+     
+            <div *ngIf=" posts " class="pages posts  col-md-12">
                 <div *ngFor=" let post of posts;  trackBy: post?.idx ">
                     <post-view-component 
                     [post]="post"
@@ -19,6 +19,6 @@
             </div>
             <div *ngIf=" inPageLoading " class="in-page-loading"><i class="fa fa-spinner fa-spin"></i> Loading ...</div>
             <div *ngIf=" noMorePosts " class="no-more-posts">No more posts</div>
-    </div>
+   
  </div>
 </section>

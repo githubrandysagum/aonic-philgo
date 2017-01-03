@@ -40,11 +40,11 @@
                 </div>
             </td>
             <td *ngIf=" active " width="1%" nowrap>
-                <button (click)="onClickCancel()">
+                <button (click)="onClickCancel()" class="cancel ">
                     Cancel
                 </button>
-                <button (click)="onClickSubmit()">
-                    SUBMIT
+                <button (click)="onClickSubmit()" class="submit ">
+                    Submit
                 </button>
                 
                 <i *ngIf=" inPosting " class="fa fa-spinner fa-spin"></i>

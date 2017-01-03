@@ -22,7 +22,7 @@ export class PostViewComponent implements OnInit {
     @ViewChild('editComponent') editComponent: EditPostComponent;
 
 
-    @Input() show: boolean = false; // if set true, the create/edit form box shows.
+    /*@Input()*/ show : boolean = false; // if set true, the create/edit form box shows.
     @Input() mode: string = null;
     @Input() post: POST = null; // it is comment or post.
     @Input() root: POST = null;
@@ -56,7 +56,9 @@ export class PostViewComponent implements OnInit {
 
 
     onClickReply() {
+        this.show = true;
         this.active = true;
+       
         this.mode = 'create-comment';
         this.editComponent.initForm( this.mode );
     }

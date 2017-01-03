@@ -4,15 +4,13 @@
    
     <section class="center">
       <div class="top-menu">
-      
         <button class="btn btn-info btn-sm" [class.btn-info]="!showCreateForm" [class.btn-primary]="showCreateForm" (click)=" showCreateForm = true "><i class="fa fa-pencil fa-xs" aria-hidden="true"></i> Create new</button>
         <button class="btn btn-info btn-sm" (click)=" onClickMakeAllRead() "><i class="fa fa-envelope-open" aria-hidden="true"></i> Make all read</button>
         <input *ngIf=" showSearchForm " name="key" [(ngModel)]="key" >
         <button class="btn btn-info btn-sm" (click)=" onClickSearchFormSubmit() ">Search</button> 
-   </div>
+      </div>
       <div class="messages">
-         <div *ngIf="showCreateForm"  class="create-form">
-            
+         <div *ngIf="showCreateForm"  class="create-form"> 
             <div class="process">
                 <div *ngIf=" process.loader ">
                 <i class="fa fa-spinner fa-spin"></i> Connecting to server ...
@@ -23,11 +21,9 @@
                 <div *ngIf=" process.success " class="alert alert-success" role="alert">
                 <strong>Success!</strong> {{ process.success }}
                 </div>
-          </div>
-         
+            </div>
             <input name="id_recv" [(ngModel)]="form.id_recv" placeholder="User ID"  >
             <textarea name="content" [(ngModel)]="form.content"  placeholder="Content"></textarea>
-         
             <button  class="btn btn-primary btn-sm" (click)="onClickCreateFormSubmit()">Submit</button> 
             <button  class="btn btn-default btn-sm" *ngIf="showCreateForm" (click)=" showCreateForm = false ">Close</button>    
         </div>
@@ -37,7 +33,6 @@
             <div class="message" *ngIf = " message.idx ">
               
               <div class="title" (click)="onClickShowContent(message)">
-               
                 <div class="from">
                    <i *ngIf="message.stamp_open != '0'" class="fa fa-envelope-open-o" aria-hidden="true"></i> 
                    <i *ngIf="message.stamp_open == '0' " class="fa fa-envelope" aria-hidden="true"></i> 
@@ -53,26 +48,19 @@
               <div class="content" *ngIf="message['show_content']">
                 <div *ngIf="message.content != 'undefined'"  class="message_content" [innerHTML]="message.content"></div>
                 <div *ngIf="message.content == 'undefined'" class="message_content"></div>
-                
-                
-
                 <div class="menu" >
                   <button class="hide menu-item" (click)="onClickHideContent(message)" >HIDE</button>
                   <button class="reply menu-item" (click)="onClickReply(message)">REPLY</button>
                   <button class="delete menu-item"  (click)="onClickDelete( message )">DELETE</button>
                 </div>
-                
-              
               </div>
+
               <div *ngIf=" message['show_content'] && message.showReplyForm && !showCreateForm" class="create-form">
                   <label>Reply</label>
                   <textarea name="content" [(ngModel)]="form.content" placeholder="Content"></textarea>
                   <button class="btn btn-success btn-sm" (click)="onClickReplyFormSubmit(message)">Submit</button> 
                   <button class="btn btn-primary btn-sm" (click)="message.showReplyForm = false">Close</button>      
                </div>
-            
-
-
             </div>
           </ng-container>
         </div>

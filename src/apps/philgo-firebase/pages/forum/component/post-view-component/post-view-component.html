@@ -3,9 +3,9 @@
          [attr.depth]=" post.depth "  
 >
 
-  {{ post.member?.nickname }}
+<div class="member" *ngIf="post.member.nickname">{{ post.member?.nickname }}</div>
   
-<h2 *ngIf=" isPost "  >{{post.subject}}</h2>
+<h5 *ngIf=" isPost "  >{{post.subject}}</h5>
 <div *ngIf="post" [innerHTML] = "post.content" [hidden]="hideContent" class="post-content"></div>
 
  <!--list images -->
@@ -15,14 +15,23 @@
 
 <!--like edit etc. buttons-->
     <span class="buttons" [hidden]="hideContent">
-        <span *ngIf=" isComment " (click)="onClickReply()" class="reply">Reply</span> &nbsp;
-        <span  (click)="onClickEdit()" class="edit">Edit</span> &nbsp;
-        <span *ngIf=" ! post.inDeleting " (click)="onClickDelete()" class="delete">Delete</span>
-        <i *ngIf=" post.inDeleting " class="fa fa-spinner fa-spin"></i> &nbsp;
-        <span  (click)="onClickLike()" class="like">Like <span *ngIf=" !post.inLike " >({{ post.good }})</span></span>
-        <i *ngIf=" post.inLike " class="fa fa-spinner fa-spin"></i> &nbsp;
-        <span *ngIf=" !post.inReport " (click)="onClickReport()" class="report">Report</span>
-        <i *ngIf=" post.inReport " class="fa fa-spinner fa-spin"></i>
+        <span *ngIf=" isComment " (click)="onClickReply()" class="reply">Reply</span> 
+        <span  (click)="onClickEdit()" class="edit">Edit</span>
+        <span (click)="onClickDelete()" class="delete">
+            Delete 
+            <i *ngIf=" post.inDeleting " class="fa fa-spinner fa-spin"></i>
+        </span>
+         
+        <span  (click)="onClickLike()" class="like">
+              Like
+              <span *ngIf=" !post.inLike " >({{ post.good }})</span>
+              <i *ngIf=" post.inLike " class="fa fa-spinner fa-spin"></i> 
+        </span>
+        <span (click)="onClickReport()" class="report">
+            Report  
+            <i *ngIf=" post.inReport " class="fa fa-spinner fa-spin"></i>
+        </span>
+       
     </span>
    
 
