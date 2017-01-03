@@ -7,9 +7,22 @@
 <form class="registerForm">
     <table class="container-fluid" cellspacing="0">
             <tr>
-                <td><label for="inputFile" >Photo</label></td>
-                <td >
-                    <input  class="form-control" name="id" type="file" id="inputID" placeholder="File" (change)="onChange($event)"> 
+                
+                <td colspan="2">
+                    <!--(click)="onClickPrimaryPhoto()-->
+                    <div class="primary-photo" >
+                        <span class="camera fa-stack fa-lg">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-camera fa-stack-1x fa-inverse"></i>
+                        </span>
+                      
+                        <img [src]="urlPhoto" />
+                        <!--<input *ngIf=" ! cordova " type="file" name="inputFile" [(ngModel)]="inputFileValue" #file (change)="onChangeFile($event, file.value)">
+                             -->
+                       <input  class="form-control" name="id" type="file" id="inputID" placeholder="File" (change)="onChange($event)"> 
+                       
+                    </div><!--/primary-photo-->
+                    <progress *ngIf="file_progress"  class="progress" [value]="position" max="100" aria-describedby="example-caption-3"></progress>
                 </td>
             </tr>
             <tr  *ngIf=" ! login ">

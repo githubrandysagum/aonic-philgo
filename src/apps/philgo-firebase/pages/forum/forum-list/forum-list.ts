@@ -61,7 +61,11 @@ export class ForumListPage implements OnInit {
                 this.delayPush( page );
             }
            
-        }, error => alert("Error:" + error))
+        }, error => {
+             this.inPageLoading = false;
+            alert("Error:" + error)
+
+        })
 
     }
 

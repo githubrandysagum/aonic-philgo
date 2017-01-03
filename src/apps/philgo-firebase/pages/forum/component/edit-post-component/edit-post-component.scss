@@ -48,16 +48,20 @@ edit-post-component{
         }
     }
     .fake-textarea {
-        background-color: white;
         border: 1px solid grey;
         height: 2.5em;
+
+
+        background-color: white;
     }
 
     .cancel, .submit{  
-       padding :0.5em 1em;
        border-radius: 2px;
-       color : white;
+       padding :0.5em 1em;
+       
+       
        background: #a8a8a8;
+       color : white;
        &:hover{
            cursor:pointer;
            background: #959595;

@@ -15,5 +15,32 @@ register-page >section {
         }
     }
 
+     .primary-photo {
+        position: relative;
+        max-width: 14em;
+        max-height: 14em;
+
+        overflow: hidden;
+        img {
+            width: 100%;
+        }
+
+        .camera {
+            position: absolute;
+            z-index: 80;
+            left: .6em;
+            bottom: .6em;
+        }
+        input {
+            position: absolute;
+            z-index: 100;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            font-size: 30em;
+            opacity: .001;
+        }
+    }
     
 }

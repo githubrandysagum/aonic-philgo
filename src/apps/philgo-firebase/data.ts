@@ -1,6 +1,8 @@
 //  constructor(@Inject(FirebaseApp) firebaseApp: any) {
-import { Inject, Injectable } from '@angular/core';
-import { FirebaseApp } from 'angularfire2';
+import {  Injectable } from '@angular/core';
+import { initializeApp, storage } from 'firebase';
+
+
 /**
  * 
  * If file data is web browser file, 'blob', 'imageData' are not needed.
@@ -19,13 +21,26 @@ export interface FILE_UPLOADED {
 }
 @Injectable()
 export class Data {
-    storage: firebase.storage.Storage;
-    constructor(@Inject(FirebaseApp) firebaseApp: any) {
-    this.storage = firebaseApp.storage(); // storage reference
-    // storageRef.getDownloadURL().then(url => this.image = url);
+   
+    storage: storage.Storage;
+    constructor() {
+      let config = {
+        apiKey: "AIzaSyBnRU17u3RLZoFDkmvHL_gxNmvQxO9z5bA",
+        authDomain: "philgofirebase.firebaseapp.com",
+        databaseURL: "https://philgofirebase.firebaseio.com",
+        storageBucket: "philgofirebase.appspot.com",
+        messagingSenderId: "17096589698"
+      };
+  
+    initializeApp(config);
+    this.storage = storage(); // storage reference
+     //storageRef.getDownloadURL().then(url => this.image = url);
+     
+
   }
 
   upload( data: FILE_UPLOAD, successCallback: (uploaded:FILE_UPLOADED) => void, failureCallback: (error:string) => void, progressCallback?: ( percent: number ) => void ) {
+  
     if ( data.ref === void 0 ) data.ref = Date.now() + '/' + data.file.name;
 
     let file = data.file;
@@ -39,15 +54,17 @@ export class Data {
     task.then( snapshot => {
       this.storage.ref( data.ref ).getDownloadURL().then( url => {
         let uploaded = { url: url, ref: data.ref };
+
+        console.log("return url:", url );
         successCallback( uploaded );
       });
     })
     .catch( e => failureCallback( e.message ) );
-
-    // task.on( firebase.storage.TaskEvent.STATE_CHANGED, snapshot => {
-    //   let percent = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-    //   progressCallback( percent );
-    // });
+   
+    task.on( storage.TaskEvent.STATE_CHANGED, snapshot => {
+     let percent = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+         progressCallback( percent );
+    });
   }
 
   delete( ref: string, successCallback: () => void, failureCallback: (error:string) => void ) {

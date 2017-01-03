@@ -1,5 +1,7 @@
 import { Component, OnInit, Renderer } from '@angular/core';
 import { Message, MESSAGE, MESSAGES, MESSAGE_LIST, MESSAGE_FORM } from '../../api/philgo-api/v2/message';
+import { Member  } from '../../api/philgo-api/v2/member';
+import { Router } from '@angular/router';
 import { formProcess } from '../../etc/share';
 import * as _ from 'lodash';
 
@@ -22,14 +24,26 @@ export class MessagePage implements OnInit {
      process = formProcess.reset();
 
     constructor(
+        private member : Member, 
         private message : Message,
         private renderer: Renderer,
+        private router : Router
     ) { 
+       this.beginScroll();
 
-        this.getMessages();
-        this.beginScroll();
+
+       if(this.member.getLoginData()){
+            this.getMessages();
+        }else{
+            alert('Login first')
+            this.goToLogin();
+        }  
+       
     }
 
+    goToLogin(){
+         this.router.navigate(['/user/login']);
+    }
     ngOnInit() { }
 
      onClickShowContent(message : MESSAGE){
@@ -197,6 +211,8 @@ export class MessagePage implements OnInit {
             alert("You have no internet.");
           }
           else alert("error:" + error);
+
+          
         },
         () => {
             console.log("message list complete");

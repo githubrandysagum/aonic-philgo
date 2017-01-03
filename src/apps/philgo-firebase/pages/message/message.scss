@@ -2,9 +2,6 @@ body{
     margin:0;
     padding : 0;
 }
-app-message{
-    
-}
 
 
 @mixin title_icon( $icon ) {
@@ -25,28 +22,31 @@ app-message{
 app-message {
     font-family: "Malgun Gothic",AppleGothic,sans-serif;
     section{
-        margin-top:5em;
+        margin-top:10em;
         margin-bottom:2em;
     }
     margin:0;
     padding:0;
     .messages {
             .message{
+               
+                border: 1px solid #dfdfdf;
+                padding: 0.2em;
                 position: relative;
 
-                padding: 0.2em;
-                border: 1px solid #dfdfdf;
-                background: #fefefe;
+                
 
                 font-size: 0.75em;
+
+                background: #fefefe;
 
                 &:nth-child(odd){
                     background-color: #f5f8fa;
                 }
                  
                 .content{
-                    padding:1em;
                     border: 1px solid #dfdfdf;
+                    padding:1em;
                     overflow-y: hidden;
                 }
             }

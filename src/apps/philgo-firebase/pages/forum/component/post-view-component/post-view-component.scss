@@ -40,13 +40,14 @@ post-view-component{
     .comment {
         margin-left: 0.5em;
         margin-top : 1em;
-        padding: 1em;
         border: 1px solid dimgray;
+        padding: 1em;
+        
 
       
-        color : black;
+        
         font-size: 0.9em;
-
+        color : black;
 
         .post-content {
            margin : 1em 0;
@@ -73,9 +74,10 @@ post-view-component{
          margin : 0.3em 0; 
       }
       .reply, .delete, .report, .like, .edit{
-            padding : 0.3em;
             border: 1px solid grey;
             border-radius: 2px;
+            padding : 0.3em;
+            
       }
 
      .reply      { @include title_icon( '\f112' ); }

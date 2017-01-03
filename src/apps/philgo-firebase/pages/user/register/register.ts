@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'; 
+import { Component, OnInit, NgZone } from '@angular/core'; 
 import { Router } from '@angular/router'
 import { formProcess } from '../../../etc/share';
 import { Member, MEMBER_DATA, MEMBER_REGISTER_DATA, MEMBER_LOGIN } from '../../../api/philgo-api/v2/member';
@@ -17,7 +17,8 @@ export let picturedescriptionData = {
 })
 export class RegisterPage implements OnInit {
     title: string = "Register";
-
+    urlPhoto : string = "./assets/img/anonymous.gif";
+   
 
     login: MEMBER_LOGIN = null;
     nickname : string = "...";
@@ -30,12 +31,12 @@ export class RegisterPage implements OnInit {
 
     position = 0;
     file_progress = null;
-    urlPhoto;
     photo = picturedescriptionData; 
     constructor(
         private member : Member,
         private router : Router,
-        private file : Data
+        private file : Data,
+        private ngZone: NgZone
     ) {
 
         this.login = member.getLoginData();
@@ -118,32 +119,45 @@ export class RegisterPage implements OnInit {
     
 
     onChange($event){
+     
+       
         let file = $event.target.files[0];
 
+        console.log("Console:file: ",file);
         if( file == void 0) return;
 
         this.file_progress = true;
         let ref = 'photo/' + Date.now() + '/' + file.name;
 
-       
-        this.file.upload( { file: file, ref: ref }, uploaded=>{
+      
+        this.file.upload( { file: file, ref: ref }, uploaded=>{  
             this.onFileUploaded( uploaded.url, uploaded.ref );   
         }, error=>{
-
+            alert('Error'+ error);
         },
-        percent=>{
+        percent=>{    
+            this.renderPage();    
             this.position = percent;
+            
         } );
 
 
     }
 
+    renderPage() {
+        this.ngZone.run(() => {
+            console.log('ngZone.run()');
+        });
+    }
     onFileUploaded( url, ref){
-
+       
         this.file_progress = false;
         this.urlPhoto = url;
         this.photo.photoURL = url;
         this.photo.photoREF = ref;
+        this.renderPage();
+         
+       
     }
 
     validate() : boolean{
