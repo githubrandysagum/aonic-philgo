@@ -18,7 +18,7 @@ export let picturedescriptionData = {
 export class RegisterPage implements OnInit {
     title: string = "Register";
     urlPhoto : string = "./assets/img/anonymous.gif";
-   
+    photoUploaded : boolean = false;
 
     login: MEMBER_LOGIN = null;
     nickname : string = "...";
@@ -32,6 +32,9 @@ export class RegisterPage implements OnInit {
     position = 0;
     file_progress = null;
     photo = picturedescriptionData; 
+
+    old_photo_ref = [];
+    new_photo_ref = [];
     constructor(
         private member : Member,
         private router : Router,
@@ -46,17 +49,17 @@ export class RegisterPage implements OnInit {
     ngOnInit() { }
 
 
-    onClickRegister() {
-        this.register();
-    }
+   
 
 
      loadFormData() {
         // don't check login here since, login is non-blocking code.
+
+       
         this.member.data( (data:MEMBER_DATA) => {
             console.log(data);
             this.memberData = data;
-          //  if ( data.user_url_primary_photo ) this.urlPhoto = data.user_url_primary_photo;
+            if ( data.varchar_1 ) this.urlPhoto = data.varchar_1;
             this.form.name = data.name;
             this.nickname = data.nickname;
             this.form.email = data.email;
@@ -70,11 +73,17 @@ export class RegisterPage implements OnInit {
         });
         
     }
-     register() {
 
-       this.process.begin();    
-       if(!this.validate()) return;
+     onClickRegister() {
+        if(!this.validate()) return;    
+        this.register();
+    }
 
+
+
+    register() {
+
+        this.process.begin();     
         this.member.register( this.form, (login) => {
             // register success
             console.log('onClickRegister(), registration sucess: ', login );
@@ -89,27 +98,24 @@ export class RegisterPage implements OnInit {
     }
 
     onClickUpdate() {
-        this.process.begin();
          if(!this.validate()) return;
-
-        this.member.update( this.form, login => {
+         this.update();
+    }
+    
+    update(){
+         this.process.begin();        
+         this.member.update( this.form, login => {
              setTimeout(()=>this.process.setSuccess( "User profile updated!" ) ,345);
-             setTimeout(()=>this.process.reset() ,5000);
-             
+             setTimeout(()=>this.process.reset() ,5000);    
         },
         error => {
             alert('error on update user profile: ' + error );
             setTimeout(()=>this.process.setError( error ),345);
         },
-        () => {
-
-        })
+        () => {})
     }
-    
 
-    onkeyupEmail(){
-       
-        
+    onkeyupEmail(){   
         if(!this.validateEmail(this.form.email)){
             setTimeout(()=> this.validEmail = false, 345);
             return;
@@ -120,16 +126,12 @@ export class RegisterPage implements OnInit {
 
     onChange($event){
      
-       
         let file = $event.target.files[0];
-
         console.log("Console:file: ",file);
         if( file == void 0) return;
-
         this.file_progress = true;
         let ref = 'photo/' + Date.now() + '/' + file.name;
 
-      
         this.file.upload( { file: file, ref: ref }, uploaded=>{  
             this.onFileUploaded( uploaded.url, uploaded.ref );   
         }, error=>{
@@ -137,8 +139,7 @@ export class RegisterPage implements OnInit {
         },
         percent=>{    
             this.renderPage();    
-            this.position = percent;
-            
+            this.position = percent;     
         } );
 
 
@@ -149,15 +150,35 @@ export class RegisterPage implements OnInit {
             console.log('ngZone.run()');
         });
     }
+
+    deleteOldPhotos(){
+
+    }
+
+    deleteNewPhotos(){
+
+
+    }
+
+    deletePhoto(ref : string){
+        this.file.delete(ref,()=> console.log("photo deleted"), error => console.log('Error deleting photo'))
+    }
+
+
     onFileUploaded( url, ref){
+        this.form.varchar_1 = this.urlPhoto;
        
+     //   this.old_photo_ref.push(this.urlPhoto);
+      //  this.new_photo_ref.push(ref);
+        
         this.file_progress = false;
         this.urlPhoto = url;
         this.photo.photoURL = url;
+
+        
         this.photo.photoREF = ref;
+        this.photoUploaded = true;
         this.renderPage();
-         
-       
     }
 
     validate() : boolean{

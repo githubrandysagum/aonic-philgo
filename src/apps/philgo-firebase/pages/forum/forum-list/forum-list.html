@@ -3,13 +3,18 @@
   <div class="row">
      
             <div *ngIf=" posts " class="pages posts  col-md-12">
+                
+                
+                 <hr>
                 <div *ngFor=" let post of posts;  trackBy: post?.idx ">
                     <post-view-component 
+                    [root] = "post"
                     [post]="post"
                     [mode] = "'create-post'"
                     ></post-view-component>
                     <div  *ngFor=" let comment of post.comments;  trackBy: comment?.idx ">
                         <post-view-component 
+                            [root] = "post"
                             [post]="comment"
                             [mode] = "'create-comment'"
                         ></post-view-component>
@@ -22,3 +27,24 @@
    
  </div>
 </section>
+<!--navbar navbar-fixed-bottom-->
+<footer class="navbar navbar-fixed-bottom col-md-12 " >
+    <div (click)="onClickPostCreate()">
+        <span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+        </span>
+        <label>Write Post</label>        
+    </div>  
+    <div *ngIf = " showPostCreateFrom ">
+            <edit-post-component 
+            [mode]    = " 'create-post' "
+            [active]  = " true "
+            [post_id] = " post_id "
+            [posts]   = " posts "
+            (error)   = " editComponentOnError( $event ) "
+            (cancel)  = " editComponentOnCancel() "
+            (success) = " editComponentOnSuccess() "
+        ></edit-post-component>     
+    </div>               
+</footer>

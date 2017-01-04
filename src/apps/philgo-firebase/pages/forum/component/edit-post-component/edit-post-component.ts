@@ -84,8 +84,11 @@ export class EditPostComponent implements OnInit {
     }
     
      successCallback( re: POST_RESPONSE ) {
+
+         
         // console.log( 'PhilGo API Query success: ', re);
         if ( this.mode == 'create-comment' ) {
+
             let post = this.root;
             let comment = <COMMENT> re.post;
             // console.log("post: ", post);

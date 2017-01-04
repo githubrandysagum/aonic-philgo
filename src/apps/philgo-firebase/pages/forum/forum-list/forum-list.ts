@@ -13,6 +13,7 @@ export class ForumListPage implements OnInit {
     posts: POSTS = <POSTS> [];
     post_id: string = '';
     page_no: number = 1;
+    showPostCreateFrom = false;
 
     noMorePosts = false;
     scrollListener = null;
@@ -103,7 +104,16 @@ export class ForumListPage implements OnInit {
       this.endScroll();
     }
 
-    
+      onClickPostCreate( ) {
+        this.showPostCreateFrom = true;
+    }
+    editComponentOnCancel() {
+        this.showPostCreateFrom = false;
+    }
+
+    editComponentOnSuccess() {
+        this.showPostCreateFrom = false;
+    }
    
 }
 

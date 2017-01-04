@@ -73,7 +73,10 @@ export class MessagePage implements OnInit {
         this.message.send( this.form, re => {
             console.log("message send success: ", re);
             this.process.setSuccess("message send success: ");
-           setTimeout(()=> this.showCreateForm = false, 2000);
+           setTimeout(()=>{ 
+               this.showCreateForm = false;
+               this.process.success = "";
+             } , 2000);
             if( re.code == 0 ) {
               //alert("Message successfully sent to " + this.form.id_recv);
               this.form.id_recv = '';
